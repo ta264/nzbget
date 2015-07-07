@@ -1226,6 +1226,7 @@ void StatusXmlCommand::Execute()
 		"<member><name>UrlCount</name><value><i4>%i</i4></value></member>\n"
 		"<member><name>UpTimeSec</name><value><i4>%i</i4></value></member>\n"
 		"<member><name>DownloadTimeSec</name><value><i4>%i</i4></value></member>\n"
+		"<member><name>SharingUser</name><value><string>%s</string></value></member>\n"
 		"<member><name>ServerPaused</name><value><boolean>%s</boolean></value></member>\n"		// deprecated (renamed to DownloadPaused)
 		"<member><name>DownloadPaused</name><value><boolean>%s</boolean></value></member>\n"
 		"<member><name>Download2Paused</name><value><boolean>%s</boolean></value></member>\n"	// deprecated (same as DownloadPaused)
@@ -1275,6 +1276,7 @@ void StatusXmlCommand::Execute()
 		"\"UrlCount\" : %i,\n"
 		"\"UpTimeSec\" : %i,\n"
 		"\"DownloadTimeSec\" : %i,\n"
+		"\"SharingUser\" : \"%s\",\n"
 		"\"ServerPaused\" : %s,\n"			// deprecated (renamed to DownloadPaused)
 		"\"DownloadPaused\" : %s,\n"
 		"\"Download2Paused\" : %s,\n"		// deprecated (same as DownloadPaused)
@@ -1369,6 +1371,7 @@ void StatusXmlCommand::Execute()
 	int resumeTime = g_Options->GetResumeTime();
 	bool feedActive = g_FeedCoordinator->HasActiveDownloads();
 	int queuedScripts = g_QueueScriptCoordinator->GetQueueSize();
+        const char* sharingUser = g_Options->GetCurrentSharingUser();
 
 	AppendFmtResponse(IsJson() ? JSON_STATUS_START : XML_STATUS_START,
 		remainingSizeLo, remainingSizeHi, remainingMBytes, forcedSizeLo,
@@ -1376,7 +1379,7 @@ void StatusXmlCommand::Execute()
 		monthSizeLo, monthSizeHi, monthMBytes, daySizeLo, daySizeHi, dayMBytes,
 		articleCacheLo, articleCacheHi, articleCacheMBytes,
 		downloadRate, averageDownloadRate, downloadLimit, threadCount,
-		postJobCount, postJobCount, urlCount, upTimeSec, downloadTimeSec,
+                postJobCount, postJobCount, urlCount, upTimeSec, downloadTimeSec, sharingUser,
 		BoolToStr(downloadPaused), BoolToStr(downloadPaused), BoolToStr(downloadPaused),
 		BoolToStr(serverStandBy), BoolToStr(postPaused), BoolToStr(scanPaused), BoolToStr(quotaReached),
 		freeDiskSpaceLo, freeDiskSpaceHi,	freeDiskSpaceMB, serverTime, resumeTime,
