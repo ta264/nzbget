@@ -155,6 +155,10 @@ static const char* OPTION_TIMECORRECTION		= "TimeCorrection";
 static const char* OPTION_PROPAGATIONDELAY		= "PropagationDelay";
 static const char* OPTION_ARTICLECACHE			= "ArticleCache";
 static const char* OPTION_EVENTINTERVAL			= "EventInterval";
+static const char* OPTION_SHARINGSTATUSENABLED		= "SharingStatusEnabled";
+static const char* OPTION_SHARINGSTATUSURL		= "SharingStatusUrl";
+static const char* OPTION_SHARINGSTATUSNAME		= "SharingStatusName";
+static const char* OPTION_SHARINGSTATUSPOLLINTERVAL	= "SharingStatusPollInterval";
 
 // obsolete options
 static const char* OPTION_POSTLOGKIND			= "PostLogKind";
@@ -392,7 +396,7 @@ void Options::Init(const char* szExeName, const char* szConfigFilename, bool bNo
 	m_eDebugTarget			= mtScreen;
 	m_eDetailTarget			= mtScreen;
 	m_bDecode				= true;
-	m_bPauseDownload		= false;
+	m_bPauseDownload		= true;
 	m_bPausePostProcess		= false;
 	m_bPauseScan			= false;
 	m_bTempPauseDownload	= true;
@@ -482,6 +486,10 @@ void Options::Init(const char* szExeName, const char* szConfigFilename, bool bNo
 	m_iPropagationDelay		= 0;
 	m_iArticleCache			= 0;
 	m_iEventInterval		= 0;
+        m_bSharingStatusEnabled         = true;
+	m_szSharingStatusUrl            = NULL;
+	m_szSharingStatusName           = NULL;
+	m_iSharingStatusPollInterval    = 0;
 
 	m_bNoDiskAccess = bNoDiskAccess;
 
@@ -544,10 +552,20 @@ void Options::Init(const char* szExeName, const char* szConfigFilename, bool bNo
 	InitCategories();
 	InitScheduler();
 	InitFeeds();
+
+        m_SharingStatus = new SharingStatus(m_bSharingStatusEnabled,
+                                            m_szSharingStatusName,
+                                            m_szSharingStatusUrl,
+                                            m_szTempDir,
+                                            m_iSharingStatusPollInterval,
+		                            m_bRemoteClientMode);
+
 }
 
 Options::~Options()
 {
+  	delete m_SharingStatus;
+        
 	g_pOptions = NULL;
 	free(m_szConfigFilename);
 	free(m_szAppDir);
@@ -583,6 +601,8 @@ Options::~Options()
 	free(m_szUnpackPassFile);
 	free(m_szExtCleanupDisk);
 	free(m_szParIgnoreExt);
+        free(m_szSharingStatusUrl);
+	free(m_szSharingStatusName);
 }
 
 void Options::Dump()
@@ -748,6 +768,10 @@ void Options::InitDefaults()
 	SetOption(OPTION_PROPAGATIONDELAY, "0");
 	SetOption(OPTION_ARTICLECACHE, "0");
 	SetOption(OPTION_EVENTINTERVAL, "0");
+	SetOption(OPTION_SHARINGSTATUSENABLED, "yes");
+	SetOption(OPTION_SHARINGSTATUSURL, "");
+	SetOption(OPTION_SHARINGSTATUSNAME, "");
+	SetOption(OPTION_SHARINGSTATUSPOLLINTERVAL, "");
 }
 
 void Options::InitOptFile()
@@ -940,6 +964,8 @@ void Options::InitOptions()
 	m_szUnpackPassFile		= strdup(GetOption(OPTION_UNPACKPASSFILE));
 	m_szExtCleanupDisk		= strdup(GetOption(OPTION_EXTCLEANUPDISK));
 	m_szParIgnoreExt		= strdup(GetOption(OPTION_PARIGNOREEXT));
+	m_szSharingStatusUrl            = strdup(GetOption(OPTION_SHARINGSTATUSURL));
+	m_szSharingStatusName           = strdup(GetOption(OPTION_SHARINGSTATUSNAME));
 
 	m_iDownloadRate			= ParseIntValue(OPTION_DOWNLOADRATE, 10) * 1024;
 	m_iArticleTimeout		= ParseIntValue(OPTION_ARTICLETIMEOUT, 10);
@@ -972,6 +998,7 @@ void Options::InitOptions()
 	m_iEventInterval		= ParseIntValue(OPTION_EVENTINTERVAL, 10);
 	m_iParBuffer			= ParseIntValue(OPTION_PARBUFFER, 10);
 	m_iParThreads			= ParseIntValue(OPTION_PARTHREADS, 10);
+	m_iSharingStatusPollInterval    = ParseIntValue(OPTION_SHARINGSTATUSPOLLINTERVAL, 10);
 
 	m_bBrokenLog			= (bool)ParseEnumValue(OPTION_BROKENLOG, BoolCount, BoolNames, BoolValues);
 	m_bNzbLog				= (bool)ParseEnumValue(OPTION_NZBLOG, BoolCount, BoolNames, BoolValues);
@@ -1002,6 +1029,7 @@ void Options::InitOptions()
 	m_bUnpackCleanupDisk	= (bool)ParseEnumValue(OPTION_UNPACKCLEANUPDISK, BoolCount, BoolNames, BoolValues);
 	m_bUnpackPauseQueue		= (bool)ParseEnumValue(OPTION_UNPACKPAUSEQUEUE, BoolCount, BoolNames, BoolValues);
 	m_bUrlForce				= (bool)ParseEnumValue(OPTION_URLFORCE, BoolCount, BoolNames, BoolValues);
+	m_bSharingStatusEnabled         = (bool)ParseEnumValue(OPTION_SHARINGSTATUSENABLED, BoolCount, BoolNames, BoolValues);
 
 	const char* OutputModeNames[] = { "loggable", "logable", "log", "colored", "color", "ncurses", "curses" };
 	const int OutputModeValues[] = { omLoggable, omLoggable, omLoggable, omColored, omColored, omNCurses, omNCurses };
@@ -2095,4 +2123,19 @@ Options::OptEntries* Options::LockOptEntries()
 void Options::UnlockOptEntries()
 {
 	m_mutexOptEntries.Unlock();
+}
+
+void Options::SetPauseDownload(bool bPauseDownload)
+{
+	m_bPauseDownload = m_SharingStatus->ChangePauseState(m_bPauseDownload, bPauseDownload);
+}
+
+void Options::CheckPauseDownload(bool bHasJob)
+{
+	m_bPauseDownload = m_SharingStatus->CheckPauseState(m_bPauseDownload, bHasJob);
+}
+
+const char* Options::GetCurrentSharingUser()
+{
+	return m_SharingStatus->GetCurrentSharingUser();
 }

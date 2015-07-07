@@ -445,6 +445,12 @@ void Run(bool bReload)
 				}
 			}
 			usleep(100 * 1000);
+
+			// Poll pause status
+			g_pOptions->CheckPauseDownload(g_pQueueCoordinator->HasMoreJobs() ||
+						       g_pUrlCoordinator->HasMoreJobs() ||
+						       g_pPrePostProcessor->HasMoreJobs());
+
 		}
 
 		// main program-loop is terminated

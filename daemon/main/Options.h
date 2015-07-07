@@ -33,6 +33,7 @@
 
 #include "Thread.h"
 #include "Util.h"
+#include "SharingStatus.h"
 
 class Options
 {
@@ -180,6 +181,7 @@ private:
 	bool				m_bNoDiskAccess;
 	bool				m_bFatalError;
 	Extender*			m_pExtender;
+	SharingStatus*                  m_SharingStatus;
 
 	// Options
 	bool				m_bConfigErrors;
@@ -284,6 +286,10 @@ private:
 	int					m_iPropagationDelay;
 	int					m_iArticleCache;
 	int					m_iEventInterval;
+	bool                            m_bSharingStatusEnabled;
+	char*                           m_szSharingStatusUrl;
+	char*                           m_szSharingStatusName;
+	int                             m_iSharingStatusPollInterval;
 
 	// Current state
 	bool				m_bServerMode;
@@ -447,8 +453,10 @@ public:
 	bool				GetServerMode() { return m_bServerMode; }
 	void				SetRemoteClientMode(bool bRemoteClientMode) { m_bRemoteClientMode = bRemoteClientMode; }
 	bool				GetRemoteClientMode() { return m_bRemoteClientMode; }
-	void				SetPauseDownload(bool bPauseDownload) { m_bPauseDownload = bPauseDownload; }
+	void				SetPauseDownload(bool bPauseDownload);
 	bool				GetPauseDownload() const { return m_bPauseDownload; }
+	void                            CheckPauseDownload(bool bHasJob);
+	const char*                     GetCurrentSharingUser();
 	void				SetPausePostProcess(bool bPausePostProcess) { m_bPausePostProcess = bPausePostProcess; }
 	bool				GetPausePostProcess() const { return m_bPausePostProcess; }
 	void				SetPauseScan(bool bPauseScan) { m_bPauseScan = bPauseScan; }

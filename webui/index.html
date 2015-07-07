@@ -114,8 +114,20 @@
 
 			<!-- SPEED/TIME -->
 			<div id="InfoBlock">
-				<div href="#" onclick="LimitDialog.clicked(event)" title="Current speed (click to set speed limit)"><i class="icon-plane" id="StatusSpeedIcon"></i> <span id="StatusSpeed">--- KB/s</span></div>
-				<div href="#" onclick="Status.statDialogClick()" title="Remaining time (click for more statistics)"><i class="icon-time" id="StatusTimeIcon"></i> <span id="StatusTime">--h --m</span></div>
+			  <div>
+			    <span>
+			      <i class="icon-plane"id="StatusSpeedIcon"></i> <span href="#" onclick="LimitDialog.clicked(event)" title="Current speed (click to set speed limit)" id="StatusSpeed">--- KB/s</span>
+			    </span>
+			    <span>
+			      <i class="icon-time" id="StatusTimeIcon"></i> <span href="#" onclick="Status.statDialogClick()" title="Remaining time (click for more statistics)" id="StatusTime">--h --m</span>
+			    </span>
+			  </div>
+			  <div>
+			    <span>
+			      <i class="icon-user" id="StatusSharingUserIcon"></i>
+			      <span href="#" title="Current user" id="StatusSharingUser"></span>
+			    </span>
+			  </div>
 			</div>
 
 			<!-- REFRESH MENU -->
