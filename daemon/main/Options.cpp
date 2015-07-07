@@ -134,6 +134,10 @@ static const char* OPTION_TIMECORRECTION		= "TimeCorrection";
 static const char* OPTION_PROPAGATIONDELAY		= "PropagationDelay";
 static const char* OPTION_ARTICLECACHE			= "ArticleCache";
 static const char* OPTION_EVENTINTERVAL			= "EventInterval";
+static const char* OPTION_SHARINGSTATUSENABLED		= "SharingStatusEnabled";
+static const char* OPTION_SHARINGSTATUSURL		= "SharingStatusUrl";
+static const char* OPTION_SHARINGSTATUSNAME		= "SharingStatusName";
+static const char* OPTION_SHARINGSTATUSPOLLINTERVAL	= "SharingStatusPollInterval";
 static const char* OPTION_SHELLOVERRIDE			= "ShellOverride";
 static const char* OPTION_MONTHLYQUOTA			= "MonthlyQuota";
 static const char* OPTION_QUOTASTARTDAY			= "QuotaStartDay";
@@ -354,10 +358,19 @@ void Options::Init(const char* exeName, const char* configFilename, bool noConfi
 	InitCategories();
 	InitScheduler();
 	InitFeeds();
+
+        m_SharingStatus = new SharingStatus(m_sharingStatusEnabled,
+                                            m_sharingStatusName,
+                                            m_sharingStatusUrl,
+                                            m_tempDir,
+                                            m_sharingStatusPollInterval,
+		                            m_remoteClientMode);
+
 }
 
 Options::~Options()
 {
+      	delete m_SharingStatus;
 	g_Options = nullptr;
 }
 
@@ -519,6 +532,10 @@ void Options::InitDefaults()
 	SetOption(OPTION_PROPAGATIONDELAY, "0");
 	SetOption(OPTION_ARTICLECACHE, "0");
 	SetOption(OPTION_EVENTINTERVAL, "0");
+        SetOption(OPTION_SHARINGSTATUSENABLED, "yes");
+	SetOption(OPTION_SHARINGSTATUSURL, "");
+	SetOption(OPTION_SHARINGSTATUSNAME, "");
+	SetOption(OPTION_SHARINGSTATUSPOLLINTERVAL, "");
 	SetOption(OPTION_SHELLOVERRIDE, "");
 	SetOption(OPTION_MONTHLYQUOTA, "0");
 	SetOption(OPTION_QUOTASTARTDAY, "1");
@@ -692,6 +709,8 @@ void Options::InitOptions()
 	m_extCleanupDisk		= GetOption(OPTION_EXTCLEANUPDISK);
 	m_parIgnoreExt			= GetOption(OPTION_PARIGNOREEXT);
 	m_unpackIgnoreExt		= GetOption(OPTION_UNPACKIGNOREEXT);
+        m_sharingStatusUrl              = GetOption(OPTION_SHARINGSTATUSURL);
+	m_sharingStatusName             = GetOption(OPTION_SHARINGSTATUSNAME);
 	m_shellOverride			= GetOption(OPTION_SHELLOVERRIDE);
 
 	m_downloadRate			= ParseIntValue(OPTION_DOWNLOADRATE, 10) * 1024;
@@ -727,6 +746,7 @@ void Options::InitOptions()
 	m_eventInterval			= ParseIntValue(OPTION_EVENTINTERVAL, 10);
 	m_parBuffer				= ParseIntValue(OPTION_PARBUFFER, 10);
 	m_parThreads			= ParseIntValue(OPTION_PARTHREADS, 10);
+        m_sharingStatusPollInterval     = ParseIntValue(OPTION_SHARINGSTATUSPOLLINTERVAL, 10);
 	m_monthlyQuota			= ParseIntValue(OPTION_MONTHLYQUOTA, 10);
 	m_quotaStartDay			= ParseIntValue(OPTION_QUOTASTARTDAY, 10);
 	m_dailyQuota			= ParseIntValue(OPTION_DAILYQUOTA, 10);
@@ -762,6 +782,7 @@ void Options::InitOptions()
 	m_urlForce				= (bool)ParseEnumValue(OPTION_URLFORCE, BoolCount, BoolNames, BoolValues);
 	m_certCheck				= (bool)ParseEnumValue(OPTION_CERTCHECK, BoolCount, BoolNames, BoolValues);
 	m_reorderFiles			= (bool)ParseEnumValue(OPTION_REORDERFILES, BoolCount, BoolNames, BoolValues);
+        m_sharingStatusEnabled         = (bool)ParseEnumValue(OPTION_SHARINGSTATUSENABLED, BoolCount, BoolNames, BoolValues);
 
 	const char* OutputModeNames[] = { "loggable", "logable", "log", "colored", "color", "ncurses", "curses" };
 	const int OutputModeValues[] = { omLoggable, omLoggable, omLoggable, omColored, omColored, omNCurses, omNCurses };
@@ -1937,3 +1958,18 @@ bool Options::HasScript(const char* scriptList, const char* scriptName)
 	}
 	return false;
 };
+
+void Options::SetPauseDownload(bool pauseDownload)
+{
+	m_pauseDownload = m_SharingStatus->ChangePauseState(m_pauseDownload, pauseDownload);
+}
+
+void Options::CheckPauseDownload(bool hasJob)
+{
+	m_pauseDownload = m_SharingStatus->CheckPauseState(m_pauseDownload, hasJob);
+}
+
+const char* Options::GetCurrentSharingUser()
+{
+	return m_SharingStatus->GetCurrentSharingUser();
+}
