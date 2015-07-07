@@ -66,6 +66,8 @@ nzbget_SOURCES = \
 	daemon/main/nzbget.h \
 	daemon/main/Options.cpp \
 	daemon/main/Options.h \
+	daemon/main/SharingStatus.cpp \
+	daemon/main/SharingStatus.h \
 	daemon/main/Scheduler.cpp \
 	daemon/main/Scheduler.h \
 	daemon/main/StackTrace.cpp \
@@ -356,6 +358,7 @@ webui_FILES = \
 	webui/lib/elycharts.js \
 	webui/lib/elycharts.min.js \
 	webui/img/icons.png \
+	webui/img/icon-user.png \
 	webui/img/icons-2x.png \
 	webui/img/transmit.gif \
 	webui/img/transmit-file.gif \

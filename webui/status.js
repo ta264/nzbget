@@ -45,6 +45,7 @@ var Status = (new function($)
 	var $StatusSpeedIcon;
 	var $StatusTimeIcon;
 	var $StatusTime;
+	var $StatusSharingUser;
 	var $StatusURLs;
 	var $PlayBlock;
 	var $PlayButton;
@@ -83,6 +84,7 @@ var Status = (new function($)
 		$StatusPaused = $('#StatusPaused');
 		$StatusLeft = $('#StatusLeft');
 		$StatusSpeed = $('#StatusSpeed');
+		$StatusSharingUser = $('#StatusSharingUser');
 		$StatusSpeedIcon = $('#StatusSpeedIcon');
 		$StatusTimeIcon = $('#StatusTimeIcon');
 		$StatusTime = $('#StatusTime');
@@ -142,6 +144,8 @@ var Status = (new function($)
 
 		updatePlayAnim();
 		updatePlayButton();
+
+		$StatusSharingUser.html(status.SharingUser);
 
 		if (status.ServerStandBy)
 		{

@@ -214,7 +214,6 @@ body.navfixed.scrolled .navbar-fixed-top .navbar-inner {
 	margin-right: 10px;
 	padding-top: 2px;
 	cursor: pointer;
-	width: 86px;
 }
 
 #InfoBlock div {
@@ -225,7 +224,7 @@ body.navfixed.scrolled .navbar-fixed-top .navbar-inner {
 	padding: 0;
 }
 
-#InfoBlock div:hover {
+#InfoBlock span:hover {
 	color: #fff;
 }
 
@@ -238,7 +237,7 @@ body.navfixed.scrolled .navbar-fixed-top .navbar-inner {
 	filter: alpha(opacity=80);
 }
 
-#InfoBlock div:hover i {
+#InfoBlock span:hover i {
 	opacity: 1;
 	filter: alpha(opacity=100);
 }
@@ -510,6 +509,12 @@ ul.dropdown-menu > li > a > i {
 		-moz-background-size: 700px 300px;
 		background-size: 700px 300px;
 	}
+    .icon-user {
+	background-image: url("./img/icon-user.png");
+	-webkit-background-size: 16px 16px;
+	-moz-background-size: 16px 16px;
+	background-size: 16px 16px;
+    }
 }
 
 [class^="icon-"],
@@ -519,6 +524,11 @@ ul.dropdown-menu > li > a > i {
 	width: 16px;
 	height: 16px;
 	line-height: 16px;
+}
+
+.icon-user {
+    background-image: url("./img/icon-user.png");
+    background-position: 0;
 }
 
 .icon-empty {
@@ -2081,7 +2091,6 @@ body.phone {
 }
 
 .phone #InfoBlock {
-	width: 190px;
 	height: 42px;
 	margin-right: 0;
 }
