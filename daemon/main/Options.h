@@ -25,6 +25,7 @@
 #include "NString.h"
 #include "Thread.h"
 #include "Util.h"
+#include "SharingStatus.h"
 
 class Options
 {
@@ -288,8 +289,10 @@ public:
 	bool GetDaemonMode() { return m_daemonMode; }
 	void SetRemoteClientMode(bool remoteClientMode) { m_remoteClientMode = remoteClientMode; }
 	bool GetRemoteClientMode() { return m_remoteClientMode; }
-	void SetPauseDownload(bool pauseDownload) { m_pauseDownload = pauseDownload; }
+	void SetPauseDownload(bool pauseDownload);
 	bool GetPauseDownload() const { return m_pauseDownload; }
+        void CheckPauseDownload(bool bHasJob);
+        const char* GetCurrentSharingUser();
 	void SetPausePostProcess(bool pausePostProcess) { m_pausePostProcess = pausePostProcess; }
 	bool GetPausePostProcess() const { return m_pausePostProcess; }
 	void SetPauseScan(bool pauseScan) { m_pauseScan = pauseScan; }
@@ -315,6 +318,7 @@ private:
 	bool m_noConfig = false;
 	bool m_fatalError = false;
 	Extender* m_extender;
+        SharingStatus* m_SharingStatus;
 
 	// Options
 	bool m_configErrors = false;
@@ -416,6 +420,10 @@ private:
 	int m_propagationDelay = 0;
 	int m_articleCache = 0;
 	int m_eventInterval = 0;
+        bool m_sharingStatusEnabled = true;
+	CString m_sharingStatusUrl = NULL;
+	CString m_sharingStatusName = NULL;
+	int m_sharingStatusPollInterval = 0;
 	CString m_shellOverride;
 	int m_monthlyQuota = 0;
 	int m_quotaStartDay = 0;
@@ -425,7 +433,7 @@ private:
 	bool m_serverMode = false;
 	bool m_daemonMode = false;
 	bool m_remoteClientMode = false;
-	bool m_pauseDownload = false;
+	bool m_pauseDownload = true;
 	bool m_pausePostProcess = false;
 	bool m_pauseScan = false;
 	bool m_tempPauseDownload = true;

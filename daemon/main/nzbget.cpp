@@ -642,6 +642,12 @@ void NZBGet::DoMainLoop()
 			}
 		}
 		usleep(100 * 1000);
+                
+                // Poll pause status
+                g_Options->CheckPauseDownload(g_QueueCoordinator->HasMoreJobs() ||
+                                               g_UrlCoordinator->HasMoreJobs() ||
+                                               g_PrePostProcessor->HasMoreJobs());
+
 	}
 
 	debug("Main program loop terminated");
