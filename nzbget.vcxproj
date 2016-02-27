@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -22,15 +22,15 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release (no TLS)|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -46,12 +46,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <_ProjectFileVersion>12.0.30501.0</_ProjectFileVersion>
+    <_ProjectFileVersion>14.0.24730.2</_ProjectFileVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>..\bin\</OutDir>
     <IntDir>..\bin\Debug\</IntDir>
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Program Files %28x86%29\GnuWin32\include;C:\Program Files %28x86%29\OpenSSL-Win32\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\GnuWin32\lib;C:\Program Files %28x86%29\OpenSSL-Win32\lib\VC;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>..\bin\</OutDir>
@@ -68,7 +70,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>.\daemon\connect;.\daemon\feed;.\daemon\frontend;.\daemon\main;.\daemon\nntp;.\daemon\postprocess;.\daemon\queue;.\daemon\remote;.\daemon\util;.\daemon\windows;.\lib\par2;.\windows\resources;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\daemon\connect;.\daemon\extension;.\daemon\feed;.\daemon\frontend;.\daemon\main;.\daemon\nntp;.\daemon\postprocess;.\daemon\queue;.\daemon\remote;.\daemon\util;.\daemon\windows;.\lib\par2;.\windows\resources;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;DEBUG;_WIN32_WINNT=0x0403;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -87,7 +89,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.\daemon\connect;.\daemon\feed;.\daemon\frontend;.\daemon\main;.\daemon\nntp;.\daemon\postprocess;.\daemon\queue;.\daemon\remote;.\daemon\util;.\daemon\windows;.\lib\par2;.\windows\resources;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\daemon\connect;.\daemon\extension;.\daemon\feed;.\daemon\frontend;.\daemon\main;.\daemon\nntp;.\daemon\postprocess;.\daemon\queue;.\daemon\remote;.\daemon\util;.\daemon\windows;.\lib\par2;.\windows\resources;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_WIN32_WINNT=0x0403;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -129,6 +131,13 @@
     <ClCompile Include="daemon\connect\Connection.cpp" />
     <ClCompile Include="daemon\connect\TLS.cpp" />
     <ClCompile Include="daemon\connect\WebDownloader.cpp" />
+    <ClCompile Include="daemon\extension\FeedScript.cpp" />
+    <ClCompile Include="daemon\extension\NzbScript.cpp" />
+    <ClCompile Include="daemon\extension\PostScript.cpp" />
+    <ClCompile Include="daemon\extension\QueueScript.cpp" />
+    <ClCompile Include="daemon\extension\ScanScript.cpp" />
+    <ClCompile Include="daemon\extension\SchedulerScript.cpp" />
+    <ClCompile Include="daemon\extension\ScriptConfig.cpp" />
     <ClCompile Include="daemon\feed\FeedCoordinator.cpp" />
     <ClCompile Include="daemon\feed\FeedFile.cpp">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/MP1 %(AdditionalOptions)</AdditionalOptions>
@@ -139,6 +148,8 @@
     <ClCompile Include="daemon\frontend\Frontend.cpp" />
     <ClCompile Include="daemon\frontend\LoggableFrontend.cpp" />
     <ClCompile Include="daemon\frontend\NCursesFrontend.cpp" />
+    <ClCompile Include="daemon\main\CommandLineParser.cpp" />
+    <ClCompile Include="daemon\main\DiskService.cpp" />
     <ClCompile Include="daemon\main\Maintenance.cpp" />
     <ClCompile Include="daemon\main\nzbget.cpp" />
     <ClCompile Include="daemon\main\Options.cpp" />
@@ -152,10 +163,12 @@
     <ClCompile Include="daemon\nntp\NNTPConnection.cpp" />
     <ClCompile Include="daemon\nntp\ServerPool.cpp" />
     <ClCompile Include="daemon\nntp\StatMeter.cpp" />
+    <ClCompile Include="daemon\postprocess\Cleanup.cpp" />
+    <ClCompile Include="daemon\postprocess\DupeMatcher.cpp" />
     <ClCompile Include="daemon\postprocess\ParChecker.cpp" />
     <ClCompile Include="daemon\postprocess\ParCoordinator.cpp" />
+    <ClCompile Include="daemon\postprocess\ParParser.cpp" />
     <ClCompile Include="daemon\postprocess\ParRenamer.cpp" />
-    <ClCompile Include="daemon\postprocess\PostScript.cpp" />
     <ClCompile Include="daemon\postprocess\PrePostProcessor.cpp" />
     <ClCompile Include="daemon\postprocess\Unpack.cpp" />
     <ClCompile Include="daemon\queue\DiskState.cpp" />
@@ -167,7 +180,6 @@
     </ClCompile>
     <ClCompile Include="daemon\queue\QueueCoordinator.cpp" />
     <ClCompile Include="daemon\queue\QueueEditor.cpp" />
-    <ClCompile Include="daemon\queue\QueueScript.cpp" />
     <ClCompile Include="daemon\queue\Scanner.cpp" />
     <ClCompile Include="daemon\queue\UrlCoordinator.cpp" />
     <ClCompile Include="daemon\remote\BinRpc.cpp" />
@@ -178,6 +190,7 @@
     <ClCompile Include="daemon\util\Log.cpp" />
     <ClCompile Include="daemon\util\Observer.cpp" />
     <ClCompile Include="daemon\util\Script.cpp" />
+    <ClCompile Include="daemon\util\Service.cpp" />
     <ClCompile Include="daemon\util\Thread.cpp" />
     <ClCompile Include="daemon\util\Util.cpp" />
     <ClCompile Include="daemon\windows\NTService.cpp" />
@@ -211,6 +224,13 @@
     <ClInclude Include="daemon\connect\Connection.h" />
     <ClInclude Include="daemon\connect\TLS.h" />
     <ClInclude Include="daemon\connect\WebDownloader.h" />
+    <ClInclude Include="daemon\extension\FeedScript.h" />
+    <ClInclude Include="daemon\extension\NzbScript.h" />
+    <ClInclude Include="daemon\extension\PostScript.h" />
+    <ClInclude Include="daemon\extension\QueueScript.h" />
+    <ClInclude Include="daemon\extension\ScanScript.h" />
+    <ClInclude Include="daemon\extension\SchedulerScript.h" />
+    <ClInclude Include="daemon\extension\ScriptConfig.h" />
     <ClInclude Include="daemon\feed\FeedCoordinator.h" />
     <ClInclude Include="daemon\feed\FeedFile.h" />
     <ClInclude Include="daemon\feed\FeedFilter.h" />
@@ -219,6 +239,8 @@
     <ClInclude Include="daemon\frontend\Frontend.h" />
     <ClInclude Include="daemon\frontend\LoggableFrontend.h" />
     <ClInclude Include="daemon\frontend\NCursesFrontend.h" />
+    <ClInclude Include="daemon\main\CommandLineParser.h" />
+    <ClInclude Include="daemon\main\DiskService.h" />
     <ClInclude Include="daemon\main\Maintenance.h" />
     <ClInclude Include="daemon\main\nzbget.h" />
     <ClInclude Include="daemon\main\Options.h" />
@@ -232,10 +254,12 @@
     <ClInclude Include="daemon\nntp\NNTPConnection.h" />
     <ClInclude Include="daemon\nntp\ServerPool.h" />
     <ClInclude Include="daemon\nntp\StatMeter.h" />
+    <ClInclude Include="daemon\postprocess\Cleanup.h" />
+    <ClInclude Include="daemon\postprocess\DupeMatcher.h" />
     <ClInclude Include="daemon\postprocess\ParChecker.h" />
     <ClInclude Include="daemon\postprocess\ParCoordinator.h" />
+    <ClInclude Include="daemon\postprocess\ParParser.h" />
     <ClInclude Include="daemon\postprocess\ParRenamer.h" />
-    <ClInclude Include="daemon\postprocess\PostScript.h" />
     <ClInclude Include="daemon\postprocess\PrePostProcessor.h" />
     <ClInclude Include="daemon\postprocess\Unpack.h" />
     <ClInclude Include="daemon\queue\DiskState.h" />
@@ -245,7 +269,6 @@
     <ClInclude Include="daemon\queue\NZBFile.h" />
     <ClInclude Include="daemon\queue\QueueCoordinator.h" />
     <ClInclude Include="daemon\queue\QueueEditor.h" />
-    <ClInclude Include="daemon\queue\QueueScript.h" />
     <ClInclude Include="daemon\queue\Scanner.h" />
     <ClInclude Include="daemon\queue\UrlCoordinator.h" />
     <ClInclude Include="daemon\remote\BinRpc.h" />
@@ -257,6 +280,7 @@
     <ClInclude Include="daemon\util\Log.h" />
     <ClInclude Include="daemon\util\Observer.h" />
     <ClInclude Include="daemon\util\Script.h" />
+    <ClInclude Include="daemon\util\Service.h" />
     <ClInclude Include="daemon\util\Thread.h" />
     <ClInclude Include="daemon\util\Util.h" />
     <ClInclude Include="daemon\windows\NTService.h" />

@@ -2,46 +2,49 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="daemon">
-      <UniqueIdentifier>{79f0dd6d-3dab-4f0a-ba81-c3a8f549c896}</UniqueIdentifier>
+      <UniqueIdentifier>{08270704-76b1-4451-b6d3-1d93f9da7af5}</UniqueIdentifier>
     </Filter>
     <Filter Include="daemon\connect">
-      <UniqueIdentifier>{01f8fbd3-154b-4ab0-a538-205b5b411749}</UniqueIdentifier>
+      <UniqueIdentifier>{a56e205f-de7e-4dbc-86b7-c6bf53c5eec3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="daemon\extension">
+      <UniqueIdentifier>{63723eb6-c67b-44ad-b7c5-2d2a6e99c9f4}</UniqueIdentifier>
     </Filter>
     <Filter Include="daemon\main">
-      <UniqueIdentifier>{19f8c838-53bc-482d-b9a5-63ae1316f622}</UniqueIdentifier>
+      <UniqueIdentifier>{f3b53373-abcd-4414-8354-14806d1717bd}</UniqueIdentifier>
     </Filter>
     <Filter Include="daemon\feed">
-      <UniqueIdentifier>{1184e385-1616-420c-85fe-dc44a47a6116}</UniqueIdentifier>
+      <UniqueIdentifier>{fa7b7fe5-e6fb-48c4-ab09-114f7d63ebf6}</UniqueIdentifier>
     </Filter>
     <Filter Include="daemon\frontend">
-      <UniqueIdentifier>{0ee1a081-5948-4ab4-b0c1-f1bd3243cc86}</UniqueIdentifier>
+      <UniqueIdentifier>{409edd2c-c3fa-431d-a437-26164b309644}</UniqueIdentifier>
     </Filter>
     <Filter Include="daemon\nntp">
-      <UniqueIdentifier>{5261d57c-c0b4-4f79-8032-ae2c1e5899c7}</UniqueIdentifier>
+      <UniqueIdentifier>{7f3ac5e2-98c3-4b3d-8ddb-73231733c981}</UniqueIdentifier>
     </Filter>
     <Filter Include="daemon\windows">
-      <UniqueIdentifier>{5938d86b-a28b-46d5-8c92-63e69c141edc}</UniqueIdentifier>
+      <UniqueIdentifier>{69318bf5-45e5-4b2e-8af6-d750d156fee0}</UniqueIdentifier>
     </Filter>
     <Filter Include="daemon\postprocess">
-      <UniqueIdentifier>{cd1d0130-22cf-466a-85cd-a18767ef56fc}</UniqueIdentifier>
+      <UniqueIdentifier>{5b58e2d1-21ae-4cf5-926e-d9080b5a4e9d}</UniqueIdentifier>
     </Filter>
     <Filter Include="daemon\queue">
-      <UniqueIdentifier>{a4d0591a-16b8-446e-8445-b959f5269037}</UniqueIdentifier>
+      <UniqueIdentifier>{1059fd1e-67f0-438c-848f-9a4d28ac987f}</UniqueIdentifier>
     </Filter>
     <Filter Include="daemon\remote">
-      <UniqueIdentifier>{ea4ca24f-d70d-4e7d-9bf6-efab078e3bfe}</UniqueIdentifier>
+      <UniqueIdentifier>{00c66261-3ae3-42d6-8c1a-1865562e2447}</UniqueIdentifier>
     </Filter>
     <Filter Include="daemon\util">
-      <UniqueIdentifier>{cc35e6b1-0e85-4229-9393-e8583d4255fc}</UniqueIdentifier>
+      <UniqueIdentifier>{f3f7783f-bbac-4715-bb87-11283a813b9a}</UniqueIdentifier>
     </Filter>
     <Filter Include="lib">
-      <UniqueIdentifier>{a463d3f6-db5d-4dcd-810d-235058cbb507}</UniqueIdentifier>
+      <UniqueIdentifier>{42ab1329-5877-4532-9715-61e27e655f56}</UniqueIdentifier>
     </Filter>
     <Filter Include="lib\par2">
-      <UniqueIdentifier>{91f7e9e7-375d-4668-84bf-a790f5064703}</UniqueIdentifier>
+      <UniqueIdentifier>{aebc9c16-0a80-4fdc-85eb-0dfd33f7d921}</UniqueIdentifier>
     </Filter>
     <Filter Include="resources">
-      <UniqueIdentifier>{9aa5e01a-45fe-43de-b219-1c524b7113bd}</UniqueIdentifier>
+      <UniqueIdentifier>{d2842191-e9f7-4f06-b9cc-b619b7ff5c3d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -54,6 +57,30 @@
     <ClCompile Include="daemon\connect\WebDownloader.cpp">
       <Filter>daemon\connect</Filter>
     </ClCompile>
+    <ClCompile Include="daemon\extension\FeedScript.cpp">
+      <Filter>daemon\extension</Filter>
+    </ClCompile>
+    <ClCompile Include="daemon\extension\NzbScript.cpp">
+      <Filter>daemon\extension</Filter>
+    </ClCompile>
+    <ClCompile Include="daemon\extension\PostScript.cpp">
+      <Filter>daemon\extension</Filter>
+    </ClCompile>
+    <ClCompile Include="daemon\extension\QueueScript.cpp">
+      <Filter>daemon\extension</Filter>
+    </ClCompile>
+    <ClCompile Include="daemon\extension\ScanScript.cpp">
+      <Filter>daemon\extension</Filter>
+    </ClCompile>
+    <ClCompile Include="daemon\extension\SchedulerScript.cpp">
+      <Filter>daemon\extension</Filter>
+    </ClCompile>
+    <ClCompile Include="daemon\extension\ScriptConfig.cpp">
+      <Filter>daemon\extension</Filter>
+    </ClCompile>
+    <ClCompile Include="daemon\main\CommandLineParser.cpp">
+      <Filter>daemon\main</Filter>
+    </ClCompile>
     <ClCompile Include="daemon\main\Maintenance.cpp">
       <Filter>daemon\main</Filter>
     </ClCompile>
@@ -64,6 +91,9 @@
       <Filter>daemon\main</Filter>
     </ClCompile>
     <ClCompile Include="daemon\main\Scheduler.cpp">
+      <Filter>daemon\main</Filter>
+    </ClCompile>
+    <ClCompile Include="daemon\main\DiskService.cpp">
       <Filter>daemon\main</Filter>
     </ClCompile>
     <ClCompile Include="daemon\main\StackTrace.cpp">
@@ -120,16 +150,22 @@
     <ClCompile Include="daemon\windows\WinConsole.cpp">
       <Filter>daemon\windows</Filter>
     </ClCompile>
+    <ClCompile Include="daemon\postprocess\Cleanup.cpp">
+      <Filter>daemon\postprocess</Filter>
+    </ClCompile>
+    <ClCompile Include="daemon\postprocess\DupeMatcher.cpp">
+      <Filter>daemon\postprocess</Filter>
+    </ClCompile>
     <ClCompile Include="daemon\postprocess\ParChecker.cpp">
       <Filter>daemon\postprocess</Filter>
     </ClCompile>
     <ClCompile Include="daemon\postprocess\ParCoordinator.cpp">
       <Filter>daemon\postprocess</Filter>
     </ClCompile>
-    <ClCompile Include="daemon\postprocess\ParRenamer.cpp">
+    <ClCompile Include="daemon\postprocess\ParParser.cpp">
       <Filter>daemon\postprocess</Filter>
     </ClCompile>
-    <ClCompile Include="daemon\postprocess\PostScript.cpp">
+    <ClCompile Include="daemon\postprocess\ParRenamer.cpp">
       <Filter>daemon\postprocess</Filter>
     </ClCompile>
     <ClCompile Include="daemon\postprocess\PrePostProcessor.cpp">
@@ -157,9 +193,6 @@
       <Filter>daemon\queue</Filter>
     </ClCompile>
     <ClCompile Include="daemon\queue\QueueEditor.cpp">
-      <Filter>daemon\queue</Filter>
-    </ClCompile>
-    <ClCompile Include="daemon\queue\QueueScript.cpp">
       <Filter>daemon\queue</Filter>
     </ClCompile>
     <ClCompile Include="daemon\queue\Scanner.cpp">
@@ -190,6 +223,9 @@
       <Filter>daemon\util</Filter>
     </ClCompile>
     <ClCompile Include="daemon\util\Script.cpp">
+      <Filter>daemon\util</Filter>
+    </ClCompile>
+    <ClCompile Include="daemon\util\Service.cpp">
       <Filter>daemon\util</Filter>
     </ClCompile>
     <ClCompile Include="daemon\util\Thread.cpp">
@@ -272,6 +308,30 @@
     <ClInclude Include="daemon\connect\WebDownloader.h">
       <Filter>daemon\connect</Filter>
     </ClInclude>
+    <ClInclude Include="daemon\extension\FeedScript.h">
+      <Filter>daemon\extension</Filter>
+    </ClInclude>
+    <ClInclude Include="daemon\extension\NzbScript.h">
+      <Filter>daemon\extension</Filter>
+    </ClInclude>
+    <ClInclude Include="daemon\extension\PostScript.h">
+      <Filter>daemon\extension</Filter>
+    </ClInclude>
+    <ClInclude Include="daemon\extension\QueueScript.h">
+      <Filter>daemon\extension</Filter>
+    </ClInclude>
+    <ClInclude Include="daemon\extension\ScanScript.h">
+      <Filter>daemon\extension</Filter>
+    </ClInclude>
+    <ClInclude Include="daemon\extension\SchedulerScript.h">
+      <Filter>daemon\extension</Filter>
+    </ClInclude>
+    <ClInclude Include="daemon\extension\ScriptConfig.h">
+      <Filter>daemon\extension</Filter>
+    </ClInclude>
+    <ClInclude Include="daemon\main\CommandLineParser.h">
+      <Filter>daemon\main</Filter>
+    </ClInclude>
     <ClInclude Include="daemon\main\Maintenance.h">
       <Filter>daemon\main</Filter>
     </ClInclude>
@@ -282,6 +342,9 @@
       <Filter>daemon\main</Filter>
     </ClInclude>
     <ClInclude Include="daemon\main\Scheduler.h">
+      <Filter>daemon\main</Filter>
+    </ClInclude>
+    <ClInclude Include="daemon\main\DiskService.h">
       <Filter>daemon\main</Filter>
     </ClInclude>
     <ClInclude Include="daemon\main\StackTrace.h">
@@ -341,16 +404,22 @@
     <ClInclude Include="daemon\windows\WinConsole.h">
       <Filter>daemon\windows</Filter>
     </ClInclude>
+    <ClInclude Include="daemon\postprocess\Cleanup.h">
+      <Filter>daemon\postprocess</Filter>
+    </ClInclude>
+    <ClInclude Include="daemon\postprocess\DupeMatcher.h">
+      <Filter>daemon\postprocess</Filter>
+    </ClInclude>
     <ClInclude Include="daemon\postprocess\ParChecker.h">
       <Filter>daemon\postprocess</Filter>
     </ClInclude>
     <ClInclude Include="daemon\postprocess\ParCoordinator.h">
       <Filter>daemon\postprocess</Filter>
     </ClInclude>
-    <ClInclude Include="daemon\postprocess\ParRenamer.h">
+    <ClInclude Include="daemon\postprocess\ParParser.h">
       <Filter>daemon\postprocess</Filter>
     </ClInclude>
-    <ClInclude Include="daemon\postprocess\PostScript.h">
+    <ClInclude Include="daemon\postprocess\ParRenamer.h">
       <Filter>daemon\postprocess</Filter>
     </ClInclude>
     <ClInclude Include="daemon\postprocess\PrePostProcessor.h">
@@ -378,9 +447,6 @@
       <Filter>daemon\queue</Filter>
     </ClInclude>
     <ClInclude Include="daemon\queue\QueueEditor.h">
-      <Filter>daemon\queue</Filter>
-    </ClInclude>
-    <ClInclude Include="daemon\queue\QueueScript.h">
       <Filter>daemon\queue</Filter>
     </ClInclude>
     <ClInclude Include="daemon\queue\Scanner.h">
@@ -414,6 +480,9 @@
       <Filter>daemon\util</Filter>
     </ClInclude>
     <ClInclude Include="daemon\util\Script.h">
+      <Filter>daemon\util</Filter>
+    </ClInclude>
+    <ClInclude Include="daemon\util\Service.h">
       <Filter>daemon\util</Filter>
     </ClInclude>
     <ClInclude Include="daemon\util\Thread.h">
