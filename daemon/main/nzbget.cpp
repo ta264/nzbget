@@ -229,6 +229,7 @@ void Run(bool bReload)
 	if (!bReload)
 	{
 		Thread::Init();
+                Connection::Init();
 	}
 
 #ifdef WIN32
@@ -284,11 +285,6 @@ void Run(bool bReload)
 	else if (g_pCommandLineParser->GetRemoteClientMode())
 	{
 		info("nzbget %s remote-mode", Util::VersionRevision());
-	}
-
-	if (!bReload)
-	{
-		Connection::Init();
 	}
 
 	if (!g_pCommandLineParser->GetRemoteClientMode())
