@@ -1,3 +1,4 @@
+#include "nzbget.h"
 #include "SharingStatus.h"
 
 SharingStatus::SharingStatus(bool enabled, char* myName, char* statusUrl, char* tempDir, int pollInterval, bool remoteClientMode) {

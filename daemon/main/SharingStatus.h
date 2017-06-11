@@ -2,7 +2,7 @@
 #define SHARINGSTATUS_H
 
 #ifdef WIN32
-#include "win32.h"
+#include "windows.h"
 #endif
 
 #include <stdio.h>
