@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -47,6 +47,8 @@
     <OutDir>..\bin\</OutDir>
     <IntDir>..\bin\Release\</IntDir>
     <LinkIncremental />
+    <IncludePath>C:\Program Files %28x86%29\GnuWin32\include;C:\OpenSSL-Win32\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\OpenSSL-Win32\lib\VC;C:\Program Files %28x86%29\GnuWin32\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -83,7 +85,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>WS2_32.lib;ole32.lib;OleAut32.Lib;comsuppwd.lib;Advapi32.lib;gdi32.lib;shell32.lib;Winmm.lib;ssleay32MT.lib;libeay32MT.lib;regex.lib;zlib.lib</AdditionalDependencies>
+      <AdditionalDependencies>WS2_32.lib;ole32.lib;OleAut32.Lib;comsuppwd.lib;Advapi32.lib;gdi32.lib;shell32.lib;Winmm.lib;libssl32MT.lib;libcrypto32MT.lib;regex.lib;zlib.lib</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -116,6 +118,7 @@
     <ClCompile Include="daemon\main\nzbget.cpp" />
     <ClCompile Include="daemon\main\Options.cpp" />
     <ClCompile Include="daemon\main\Scheduler.cpp" />
+    <ClCompile Include="daemon\main\SharingStatus.cpp" />
     <ClCompile Include="daemon\main\StackTrace.cpp" />
     <ClCompile Include="daemon\nntp\ArticleDownloader.cpp" />
     <ClCompile Include="daemon\nntp\ArticleWriter.cpp" />
@@ -213,6 +216,7 @@
     <ClInclude Include="daemon\main\nzbget.h" />
     <ClInclude Include="daemon\main\Options.h" />
     <ClInclude Include="daemon\main\Scheduler.h" />
+    <ClInclude Include="daemon\main\SharingStatus.h" />
     <ClInclude Include="daemon\main\StackTrace.h" />
     <ClInclude Include="daemon\nntp\ArticleDownloader.h" />
     <ClInclude Include="daemon\nntp\ArticleWriter.h" />
