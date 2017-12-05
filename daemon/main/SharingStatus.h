@@ -42,6 +42,7 @@ public:
 	bool ChangePauseState(bool currentPauseState, bool wantedPauseState);
 	bool CheckPauseState(bool currentlyPaused, bool hasJob);
 	const char* GetCurrentSharingUser();
+        bool GetPollResume();
 };
 
 #endif

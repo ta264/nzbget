@@ -316,6 +316,7 @@ public:
 	bool GetPauseDownload() const { return m_pauseDownload; }
         void CheckPauseDownload(bool bHasJob);
         const char* GetCurrentSharingUser();
+        bool GetSharingPollResume();
 	void SetPausePostProcess(bool pausePostProcess) { m_pausePostProcess = pausePostProcess; }
 	bool GetPausePostProcess() const { return m_pausePostProcess; }
 	void SetPauseScan(bool pauseScan) { m_pauseScan = pauseScan; }

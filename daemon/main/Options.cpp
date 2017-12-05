@@ -1973,3 +1973,8 @@ const char* Options::GetCurrentSharingUser()
 {
 	return m_SharingStatus->GetCurrentSharingUser();
 }
+
+bool Options::GetSharingPollResume()
+{
+        return m_SharingStatus->GetPollResume();
+}

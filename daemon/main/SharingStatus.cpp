@@ -177,3 +177,8 @@ const char* SharingStatus::GetCurrentSharingUser()
 {
 	return m_currentUser.c_str();
 }
+
+bool SharingStatus::GetPollResume()
+{
+        return m_pollResume;
+}
