@@ -22,6 +22,7 @@
 #define WORKSTATE_H
 
 #include "Observer.h"
+#include "SharingStatus.h"
 
 // WorkState is observable but notifications are not 100% reliable.
 // The changes via Set-methods and readings via Get-methods are not synchronized throughout the program.
@@ -31,8 +32,13 @@
 class WorkState : public Subject
 {
 public:
-	void SetPauseDownload(bool pauseDownload) { m_pauseDownload = pauseDownload; Changed(); }
+  ~WorkState();
+  void SetPauseDownload(bool pauseDownload);
 	bool GetPauseDownload() const { return m_pauseDownload; }
+  void InitSharingStatus(bool enabled, const char* name, const char* url, const char* tempDir, int pollInterval, bool remoteClientMode);
+        void CheckPauseDownload(bool hasJob);
+        const char* GetCurrentSharingUser();
+  bool GetSharingPollResume();
 	void SetPausePostProcess(bool pausePostProcess) { m_pausePostProcess = pausePostProcess; Changed(); }
 	bool GetPausePostProcess() const { return m_pausePostProcess; }
 	void SetPauseScan(bool pauseScan) { m_pauseScan = pauseScan; Changed(); }
@@ -55,7 +61,9 @@ public:
 	bool GetDownloading() { return m_downloading; }
 
 private:
-	bool m_pauseDownload = false;
+        SharingStatus* m_SharingStatus;
+  
+	bool m_pauseDownload = true;
 	bool m_pausePostProcess = false;
 	bool m_pauseScan = false;
 	bool m_tempPauseDownload = true;

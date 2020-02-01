@@ -21,7 +21,39 @@
 #include "nzbget.h"
 #include "WorkState.h"
 
+WorkState::~WorkState()
+{
+        delete m_SharingStatus;
+}
+
 void WorkState::Changed()
 {
 	Notify(nullptr);
+}
+
+void WorkState::InitSharingStatus(bool enabled, const char* name, const char* url, const char* tempDir, int pollInterval, bool remoteClientMode)
+{
+        m_SharingStatus = new SharingStatus(enabled, name, url, tempDir, pollInterval, remoteClientMode);
+}
+
+void WorkState::SetPauseDownload(bool pauseDownload)
+{
+	m_pauseDownload = m_SharingStatus->ChangePauseState(m_pauseDownload, pauseDownload);
+        Changed();
+}
+
+void WorkState::CheckPauseDownload(bool hasJob)
+{
+	m_pauseDownload = m_SharingStatus->CheckPauseState(m_pauseDownload, hasJob);
+        Changed();
+}
+
+const char* WorkState::GetCurrentSharingUser()
+{
+	return m_SharingStatus->GetCurrentSharingUser();
+}
+
+bool WorkState::GetSharingPollResume()
+{
+        return m_SharingStatus->GetPollResume();
 }

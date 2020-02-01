@@ -293,6 +293,11 @@ public:
 	int GetPropagationDelay() { return m_propagationDelay; }
 	int GetArticleCache() { return m_articleCache; }
 	int GetEventInterval() { return m_eventInterval; }
+  bool GetSharingStatusEnabled() { return m_sharingStatusEnabled; }
+  const char* GetSharingStatusUrl() { return m_sharingStatusUrl; }
+  const char* GetSharingStatusName() { return m_sharingStatusName; }
+  int GetSharingStatusPollInterval() { return m_sharingStatusPollInterval; }
+
 	const char* GetShellOverride() { return m_shellOverride; }
 	int GetMonthlyQuota() { return m_monthlyQuota; }
 	int GetQuotaStartDay() { return m_quotaStartDay; }
@@ -427,6 +432,10 @@ private:
 	int m_propagationDelay = 0;
 	int m_articleCache = 0;
 	int m_eventInterval = 0;
+        bool m_sharingStatusEnabled = true;
+	CString m_sharingStatusUrl = NULL;
+	CString m_sharingStatusName = NULL;
+	int m_sharingStatusPollInterval = 0;
 	CString m_shellOverride;
 	int m_monthlyQuota = 0;
 	int m_quotaStartDay = 0;

@@ -227,8 +227,6 @@ private:
 	bool m_reloading = false;
 	bool m_daemonized = false;
 	bool m_stopped = false;
-	Mutex m_waitMutex;
-	ConditionVar m_waitCond;
 
 	void Init();
 	void Final();
@@ -421,7 +419,12 @@ void NZBGet::BootConfig()
 		m_commandLineParser->GetNoConfig(), (Options::CmdOptList*)m_commandLineParser->GetOptionList(), this);
 	m_options->SetRemoteClientMode(m_commandLineParser->GetRemoteClientMode());
 	m_options->SetServerMode(m_commandLineParser->GetServerMode());
-	m_workState->SetPauseDownload(m_commandLineParser->GetPauseDownload());
+        m_workState->InitSharingStatus(m_options->GetSharingStatusEnabled(),
+                                       m_options->GetSharingStatusName(),
+                                       m_options->GetSharingStatusUrl(),
+                                       m_options->GetTempDir(),
+                                       m_options->GetSharingStatusPollInterval(),
+                                       m_options->GetRemoteClientMode());
 	m_workState->SetSpeedLimit(g_Options->GetDownloadRate());
 
 	m_log->InitOptions();
@@ -705,13 +708,12 @@ void NZBGet::DoMainLoop()
 			}
 		}
 		Util::Sleep(100);
+                
+                // Poll pause status
+                m_workState->CheckPauseDownload(m_queueCoordinator->HasMoreJobs() ||
+                                                m_urlCoordinator->HasMoreJobs() ||
+                                                m_prePostProcessor->HasMoreJobs());
 
-		if (m_options->GetServerMode() && !m_stopped)
-		{
-			// wait for stop signal
-			Guard guard(m_waitMutex);
-			m_waitCond.Wait(m_waitMutex, [&]{ return m_stopped; });
-		}
 	}
 
 	debug("Main program loop terminated");
@@ -914,11 +916,6 @@ void NZBGet::Stop(bool reload)
 #endif
 		}
 	}
-
-	// trigger stop/reload signal
-	Guard guard(m_waitMutex);
-	m_stopped = true;
-	m_waitCond.NotifyAll();
 }
 
 void NZBGet::PrintOptions()
